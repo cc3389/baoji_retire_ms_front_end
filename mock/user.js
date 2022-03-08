@@ -27,14 +27,14 @@ export default {
       code: 200,
       msg: 'ok',
       data:
-      //   {
-      //   roles: 'low',
-      //   name: '市区管理员'
-      // }
-    {
-      roles: 'mid',
-      name: '县区管理员'
-    }
+        {
+          roles: 'low',
+        name: '市区管理员'
+      }
+    // {
+    //   roles: 'mid',
+    //   name: '县区管理员'
+    // }
     // {
     //   roles: 'low',
     //     name: '系统管理员'

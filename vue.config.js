@@ -30,16 +30,13 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    // 跨域代理
+  // 跨域代理
     proxy: {
       '/': {
         // 请求的实际地址
-        target: 'http://192.168.130.42:8080',
+        target: 'http://192.168.5.42:8080',
         secure: false,
         changeOrigin: true
-        // pathReWrite: {
-        //   '^/api': ''
-        // }
       }
     },
     port: port,

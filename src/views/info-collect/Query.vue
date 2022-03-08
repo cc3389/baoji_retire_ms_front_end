@@ -8,19 +8,19 @@
           <el-form-item label="姓名">
             <el-input v-model="requestParam.name" placeholder="姓名" />
           </el-form-item>
-          <el-form-item label="生日">
-            <el-col>
-              <el-form-item prop="birth">
-                <el-date-picker v-model="requestParam.birth" type="date" placeholder="选择生日" style="width: 100%" />
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="性别" prop="gender">
-            <el-radio-group v-model="requestParam.gender">
-              <el-radio label="男" />
-              <el-radio label="女" />
-            </el-radio-group>
-          </el-form-item>
+<!--          <el-form-item label="生日">-->
+<!--            <el-col>-->
+<!--              <el-form-item prop="birth">-->
+<!--                <el-date-picker v-model="requestParam.birth" type="date" placeholder="选择生日" style="width: 100%" />-->
+<!--              </el-form-item>-->
+<!--            </el-col>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="性别" prop="gender">-->
+<!--            <el-radio-group v-model="requestParam.gender">-->
+<!--              <el-radio label="男" />-->
+<!--              <el-radio label="女" />-->
+<!--            </el-radio-group>-->
+<!--          </el-form-item>-->
           <el-form-item>
             <el-button type="primary" @click="handleFilterSumit">过滤器</el-button>
             <el-button @click="resetFilter('filter')">重置</el-button>

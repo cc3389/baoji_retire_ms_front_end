@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-row :gutter="10">
-      <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple" /></el-col>
+      <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div/></el-col>
       <el-col :xs="8" :sm="12" :md="16" :lg="18" :xl="22" type="flex" justify="center"><div>
         <br><br><br><br><br>
         <el-divider />
@@ -34,7 +34,7 @@
         </el-form>
         <el-divider />
       </div></el-col>
-      <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple-light" /></el-col>
+      <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div/></el-col>
     </el-row>
   </div>
 </template>

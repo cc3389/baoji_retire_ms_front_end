@@ -5,6 +5,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <el-link href="javascript:void(0)">{{ name }}</el-link>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2F0d%2F4f%2F20%2F0d4f204e099d2410f17984c35c63a152.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648524727&t=0f52392a54784bd53962544b5b21f022" class="user-avatar">
@@ -38,7 +39,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name'
     ])
   },
   methods: {

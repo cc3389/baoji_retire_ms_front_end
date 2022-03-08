@@ -145,12 +145,12 @@ export const asyncRoutes = [
       icon: '档案,档案袋'
     },
     children: [
-      {
-        path: 'query',
-        name: 'query',
-        component: () => import('@/views/file-manage/Query'),
-        meta: { title: '档案查询', icon: '查询', roles: 'low' }
-      },
+      // {
+      //   path: 'query',
+      //   name: 'query',
+      //   component: () => import('@/views/file-manage/Query'),
+      //   meta: { title: '档案查询', icon: '查询', roles: 'low' }
+      // },
       // {
       //   path: 'trans-in',
       //   name: 'trans-in',

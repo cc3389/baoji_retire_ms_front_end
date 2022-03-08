@@ -2,19 +2,19 @@
   <div id="app">
     <br>
     <!--    过滤器-->
-    <el-row type="flex" justify="center">
-      <el-col :span="16">
-        <el-form ref="filter" :inline="true" :model="filter" class="demo-form-inline">
-          <el-form-item label="姓名">
-            <el-input v-model="filter.name" placeholder="姓名" />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">过滤器</el-button>
-            <el-button @click="resetFilter('filter')">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+<!--    <el-row type="flex" justify="center">-->
+<!--      <el-col :span="16">-->
+<!--        <el-form ref="filter" :inline="true" :model="filter" class="demo-form-inline">-->
+<!--          <el-form-item label="姓名">-->
+<!--            <el-input v-model="filter.name" placeholder="姓名" />-->
+<!--          </el-form-item>-->
+<!--          <el-form-item>-->
+<!--            <el-button type="primary" @click="onSubmit">过滤器</el-button>-->
+<!--            <el-button @click="resetFilter('filter')">重置</el-button>-->
+<!--          </el-form-item>-->
+<!--        </el-form>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
     <!--    分页-->
     <el-row type="flex" justify="center">
       <div class="block" :span="14">
