@@ -28,9 +28,19 @@
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="机构名" prop="insName">
+          <!--          <el-form-item label="机构名" prop="insName">-->
+          <!--            <el-col :span="8">-->
+          <!--              <el-input v-model="ruleForm.insName" />-->
+          <!--            </el-col>-->
+          <!--          </el-form-item>-->
+          <el-form-item label="机构名" prop="insName" required>
             <el-col :span="8">
-              <el-input v-model="ruleForm.insName" />
+              <el-autocomplete
+                v-model="ruleForm.insName"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入区域名称"
+                @select="handleSelect"
+              />
             </el-col>
           </el-form-item>
           <el-form-item ref="uploadElement" label="上传照片" prop="avatar">
@@ -54,7 +64,7 @@
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
-        <el-divider/>
+        <el-divider />
       </div>
       </el-col>
     </el-row>
@@ -65,6 +75,7 @@
 import { addMember } from '@/api/file'
 import { Message } from 'element-ui'
 import { elDateToFormat } from '@/utils/date'
+import { insSuggesion } from '@/api/institude'
 
 var validatorPhone = function(rule, value, callback) {
   if (value === '') {
@@ -78,6 +89,7 @@ var validatorPhone = function(rule, value, callback) {
 export default {
   data() {
     return {
+      suggestion: '',
       ruleForm: {
         name: '',
         gender: '',
@@ -110,8 +122,17 @@ export default {
       }
     }
   },
+  mounted() {
+    this.suggestion = this.loadAll()
+  },
   methods: {
-
+    loadAll() {
+      new Promise(resolve => {
+        insSuggesion().then(response => {
+          this.suggestion = response.data
+        })
+      })
+    },
     submitForm(formName) {
       if (this.beforeUpload(this.ruleForm.file)) {
         this.$refs[formName].validate((valid) => {
@@ -144,7 +165,6 @@ export default {
           }
         })
       }
-
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
@@ -166,6 +186,22 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    querySearchAsync(queryString, cb) {
+      const input = this.suggestion
+      var results = queryString ? [input].filter(this.createStateFilter(queryString)) : input
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        cb(results)
+      }, 3000 * Math.random())
+    },
+    createStateFilter(queryString) {
+      return (state) => {
+        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    handleSelect(item) {
+      console.log(item)
     }
   }
 }
