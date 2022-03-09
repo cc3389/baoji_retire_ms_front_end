@@ -37,7 +37,7 @@ export function addIns(params) {
 }
 export function insSuggesion() {
   return request({
-    url: '/institute/suggesion',
+    url: '/institute/suggestion',
     method: 'get'
   })
 }

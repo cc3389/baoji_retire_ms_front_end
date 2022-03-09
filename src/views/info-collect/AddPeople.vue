@@ -129,7 +129,7 @@ export default {
     loadAll() {
       new Promise(resolve => {
         insSuggesion().then(response => {
-          this.suggestion = response.data
+          this.suggestion = response.data.list
         })
       })
     },

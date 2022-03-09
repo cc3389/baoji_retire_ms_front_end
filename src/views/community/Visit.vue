@@ -143,7 +143,7 @@ export default {
     loadAll() {
       new Promise(resolve => {
         comSuggestion().then(response => {
-          this.suggestion = response.data
+          this.suggestion = response.data.list
         })
       })
     },

@@ -106,7 +106,6 @@
 
 <script>
 import { addActivity, activityPage } from '@/api/activity'
-import { transSuggestion } from '@/api/trans'
 import { comSuggestion } from '@/api/community'
 
 export default {
@@ -152,7 +151,7 @@ export default {
     loadAll() {
       new Promise(resolve => {
         comSuggestion().then(response => {
-          this.suggestion = response.data
+          this.suggestion = response.data.list
         })
       })
     },
