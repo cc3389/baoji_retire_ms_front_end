@@ -28,3 +28,9 @@ export function addCommunity(params) {
     data: params
   })
 }
+export function comSuggestion() {
+  return request({
+    url: '/community/suggestion',
+    method: 'get'
+  })
+}

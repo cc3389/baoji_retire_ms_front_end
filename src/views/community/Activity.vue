@@ -74,11 +74,18 @@
     </el-row>
     <el-dialog title="添加活动记录" :visible.sync="dialogFormVisible">
       <el-form ref="editDataForm" :model="editDataForm" :rules="rules">
-        <el-form-item label="活动社区名称" prop="name">
+        <el-form-item label="活动名称" prop="name">
           <el-input v-model="editDataForm.name" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="活动社区名称" prop="comName">
-          <el-input v-model="editDataForm.comName" autocomplete="off" />
+        <el-form-item label="社区名称" prop="areaName" required>
+          <el-col :span="8">
+            <el-autocomplete
+              v-model="editDataForm.comName"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入区域名称"
+              @select="handleSelect"
+            />
+          </el-col>
         </el-form-item>
         <el-form-item label="活动时间" prop="date">
           <el-col :span="11">
@@ -99,6 +106,8 @@
 
 <script>
 import { addActivity, activityPage } from '@/api/activity'
+import { transSuggestion } from '@/api/trans'
+import { comSuggestion } from '@/api/community'
 
 export default {
 
@@ -107,6 +116,7 @@ export default {
       page: 1,
       size: 10,
       total: 0,
+      suggestion: '',
       dialogFormVisible: false,
       tableLoading: false,
       tableData: '',
@@ -135,7 +145,17 @@ export default {
   created: function() {
     this.getList()
   },
+  mounted() {
+    this.suggestion = this.loadAll()
+  },
   methods: {
+    loadAll() {
+      new Promise(resolve => {
+        comSuggestion().then(response => {
+          this.suggestion = response.data
+        })
+      })
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
       this.size = val
@@ -179,6 +199,22 @@ export default {
           })
         }
       })
+    },
+    querySearchAsync(queryString, cb) {
+      const input = this.suggestion
+      var results = queryString ? [input].filter(this.createStateFilter(queryString)) : input
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        cb(results)
+      }, 3000 * Math.random())
+    },
+    createStateFilter(queryString) {
+      return (state) => {
+        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    handleSelect(item) {
+      console.log(item)
     }
   }
 }
