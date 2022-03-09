@@ -251,6 +251,7 @@ import { transOut } from '@/api/member'
 export default {
   data() {
     return {
+      birth: '',
       requestParam: {
         page: 1,
         size: 10,
@@ -289,6 +290,7 @@ export default {
         insName: ''
       },
       editDataForm: {
+        id: '',
         name: '',
         phone: '',
         avatar: '',
@@ -313,7 +315,7 @@ export default {
           { required: true, message: '请选择性别', trigger: 'blur' }
         ],
         birth: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { required: true, message: '请选择日期', trigger: 'change' }
         ]
       }
     }
@@ -385,6 +387,7 @@ export default {
           new Promise((resolve, reject) => {
             const birth = elDateToFormat(this.editDataForm.birth)
             const files = new FormData()
+            files.append('id', this.editDataForm.id)
             files.append('name', this.editDataForm.name)
             files.append('gender', this.editDataForm.gender)
             files.append('phone', this.editDataForm.phone)
@@ -433,6 +436,7 @@ export default {
       new Promise((resolve, reject) => {
         queryMemberDetail(requestParam).then(response => {
           this.detailData = response.data.list
+          this.editDataForm.id = id
           this.editDataForm.age = this.detailData.age
           this.editDataForm.birth = formatToElDate(this.detailData.birth)
           this.editDataForm.avatar = this.detailData.avatar

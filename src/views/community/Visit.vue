@@ -74,12 +74,12 @@
     </el-row>
     <el-dialog title="添加走访记录" :visible.sync="dialogFormVisible">
       <el-form ref="editDataForm" :model="editDataForm" :rules="rules">
-        <el-form-item label="走访社区名称" prop="areaName" required>
+        <el-form-item label="走访社区名称" prop="comName">
           <el-col :span="8">
             <el-autocomplete
               v-model="editDataForm.comName"
               :fetch-suggestions="querySearchAsync"
-              placeholder="请输入区域名称"
+              placeholder="请输入社区名称"
               @select="handleSelect"
             />
           </el-col>

@@ -39,7 +39,8 @@ router.beforeEach(async(to, from, next) => {
           console.log('[路由拦截器]accessRoutes:', accessRoutes)
           console.log('[路由拦截器]next()', next())
           if (to.meta.roles === store.getters.auth) {
-            next()
+            // next()
+            next({ ...to, replace: true })
           }
         } catch (error) {
           console.log('error', error)

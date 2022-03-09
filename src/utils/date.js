@@ -23,6 +23,6 @@ export function elDateToFormat(date) {
   return new Date(date).format('yyyy-MM-dd')
 }
 export function formatToElDate(date) {
-  const d = new Date(date)
+  const d = new Date(date + ' 00:00:00')
   return d.toString()
 }

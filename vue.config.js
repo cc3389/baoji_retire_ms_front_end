@@ -34,7 +34,7 @@ module.exports = {
     proxy: {
       '/': {
         // 请求的实际地址
-        target: 'http://192.168.5.42:8080',
+        target: 'http://192.168.10.158:8080',
         secure: false,
         changeOrigin: true
       }

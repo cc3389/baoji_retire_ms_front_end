@@ -77,12 +77,12 @@
         <el-form-item label="活动名称" prop="name">
           <el-input v-model="editDataForm.name" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="社区名称" prop="areaName" required>
+        <el-form-item label="社区名称" prop="comName">
           <el-col :span="8">
             <el-autocomplete
               v-model="editDataForm.comName"
               :fetch-suggestions="querySearchAsync"
-              placeholder="请输入区域名称"
+              placeholder="请输入社区名称"
               @select="handleSelect"
             />
           </el-col>
