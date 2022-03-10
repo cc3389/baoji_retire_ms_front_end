@@ -77,7 +77,7 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: '/'
     }
   },
   watch: {
@@ -105,7 +105,7 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             // 路由跳转
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path:  '/' })
             this.loading = false
           }).catch(() => {
             this.loading = false

@@ -29,6 +29,11 @@ router.beforeEach(async(to, from, next) => {
       const hasGetUserInfo = store.getters.name
       console.log('[路由拦截器]userinfo:', hasGetUserInfo)
       if (hasGetUserInfo) {
+        // const { roles } = await store.dispatch('user/getInfo')
+        // const accessRoutes = await store.dispatch('user/generateRoutes', roles)
+        // router.addRoutes(accessRoutes)// 动态添加路由
+        // next({ ...to, replace: true })
+        console.log('[路由拦截器]to:', to)
         next()
       } else {
         try {
