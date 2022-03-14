@@ -1,9 +1,12 @@
 <template>
-  <div id="app">
+  <div class="app-container">
+
     <el-row :gutter="10" type="flex" justify="center">
       <el-col :xs="8" :sm="12" :md="16" :lg="18" :xl="22"><div>
-        <br><br><br><br><br>
         <el-divider />
+        <div>
+          <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUploadExcel" />
+        </div>
         <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
           <el-form-item label="姓名" prop="name">
             <el-col :span="8">
@@ -76,7 +79,8 @@ import { addMember } from '@/api/file'
 import { Message } from 'element-ui'
 import { elDateToFormat } from '@/utils/date'
 import { insSuggesion } from '@/api/institude'
-
+import UploadExcelComponent from '@/components/UploadExcel/index.vue'
+import { validateExcel } from '@/utils/validate'
 var validatorPhone = function(rule, value, callback) {
   if (value === '') {
     callback(new Error('请输入手机号'))
@@ -87,8 +91,11 @@ var validatorPhone = function(rule, value, callback) {
   }
 }
 export default {
+  components: { UploadExcelComponent },
   data() {
     return {
+      tableData: [],
+      tableHeader: [],
       suggestion: '',
       ruleForm: {
         name: '',
@@ -126,6 +133,30 @@ export default {
     this.suggestion = this.loadAll()
   },
   methods: {
+    handleSuccess({ results, header }) {
+      var form = {
+        name: results[0].姓名,
+        gender: results[0].性别,
+        phone: results[0].手机号,
+        birthday: results[0].生日,
+        insName: results[0].机构名
+      }
+      form = validateExcel(form)
+      this.ruleForm = form
+    },
+    beforeUploadExcel(file) {
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (isLt1M) {
+        return true
+      }
+
+      this.$message({
+        message: '请不要上传大于1m的文件',
+        type: 'warning'
+      })
+      return false
+    },
     loadAll() {
       new Promise(resolve => {
         insSuggesion().then(response => {

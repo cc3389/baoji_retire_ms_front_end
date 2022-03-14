@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app-container">
     <br>
     <!--    过滤器-->
     <el-row type="flex" justify="center">
@@ -45,17 +45,23 @@
     </el-row>
     <el-divider />
     <!--    表格-->
+    <el-input v-model="filename" placeholder="请输入文件名 (默认为 excel-list)" style="width:350px;" prefix-icon="el-icon-document" />
+    <el-button :loading="downloadLoading" style="margin-bottom:20px" type="primary" icon="el-icon-document" @click="handleDownload">
+      导出选定项目
+    </el-button>
     <el-row v-loading="listLoading" type="flex" justify="center">
       <el-col :span="18">
         <el-table
           :data="tableData"
           style="width: 100%"
           :default-sort="{prop: 'peoId', order: 'ascending'}"
+          @selection-change="handleSelectionChange"
         >
+          <el-table-column type="selection" align="center" />
           <el-table-column
-            prop="peoId"
-            label="peoId"
-            width="150"
+            prop="id"
+            label="id"
+            widith="150"
           />
           <el-table-column
             prop="name"
@@ -251,13 +257,17 @@ import { transOut } from '@/api/member'
 export default {
   data() {
     return {
+      list: null,
+      multipleSelection: [],
+      downloadLoading: false,
+      filename: '',
       birth: '',
       requestParam: {
         page: 1,
         size: 10,
         name: '',
         birth: '',
-        gender: '',
+        gender: ''
       },
       transOutForm: {
         id: '',
@@ -270,9 +280,7 @@ export default {
       editLoading: false,
       transSuggestion: '',
       filter: {
-        name: '',
-        birth: '',
-        gender: ''
+        name: ''
       },
       dialogDetailVisible: false,
       dialogFormVisible: false,
@@ -328,6 +336,38 @@ export default {
     this.getList()
   },
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
+    handleDownload() {
+      if (this.multipleSelection.length) {
+        this.downloadLoading = true
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = ['id', '姓名', '生日', '性别']
+          const filterVal = ['id', 'name', 'birthday', 'gender']
+          const list = this.multipleSelection
+          const data = this.formatJson(filterVal, list)
+          console.log('准备导出')
+          console.log(data)
+          excel.export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: this.filename
+          })
+          console.log('导出成功')
+          this.$refs.multipleTable.clearSelection()
+          this.downloadLoading = false
+        })
+      } else {
+        this.$message({
+          message: '请至少选择一项',
+          type: 'warning'
+        })
+      }
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]))
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
       this.requestParam.size = val

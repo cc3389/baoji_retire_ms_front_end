@@ -29,8 +29,8 @@ export default {
       data:
         {
           roles: 'low',
-        name: '市区管理员'
-      }
+          name: '市区管理员'
+        }
     // {
     //   roles: 'mid',
     //   name: '县区管理员'
