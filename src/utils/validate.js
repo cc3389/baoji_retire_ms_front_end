@@ -74,7 +74,6 @@ export function validatePhone(rule, value, callback) {
     callback()
   }
 }
-
 export function validateExcel(form) {
   if (typeof form.name !== 'string') {
     form.name = ''
@@ -86,9 +85,11 @@ export function validateExcel(form) {
     form.birthday = ''
   } else {
     form.birthday = form.birthday.replaceAll('.', '-')
-    if (isDate(form.birthday)) {
+    // if (isDate(form.birthday)) {
+      console.log('b4', form.birthday)
       form.birthday = formatToElDate(form.birthday)
-    }
+      console.log('af', form.birthday)
+    // }
   }
   if (typeof form.phone !== 'number') {
     form.phone = ''

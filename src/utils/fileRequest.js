@@ -40,13 +40,13 @@ fileService.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    console.log('[response]', res)
     // if the custom code is not 200, it is judged as an error.
     if (res.code !== 200) {
       // message 会在头部显示消息框
       // 全局异常处理放这里？
       Message({
-        message: res.message || 'Error',
+        message: res.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })

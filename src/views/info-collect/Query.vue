@@ -346,7 +346,7 @@ export default {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
           const tHeader = ['姓名', '生日', '性别', '年龄', '手机号', '机构名称', '健康状况']
-          const filterVal = ['name', 'birth', 'gender','age', 'phone', 'insName', 'isDeath']
+          const filterVal = ['name', 'birth', 'gender', 'age', 'phone', 'insName', 'isDeath']
           const originalList = this.multipleSelection
           var list = []
           for (const i in originalList) {

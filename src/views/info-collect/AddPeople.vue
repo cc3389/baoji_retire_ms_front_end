@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <el-row :gutter="10" type="flex" justify="center">
       <el-col :xs="8" :sm="12" :md="16" :lg="18" :xl="22"><div>
         <el-divider />
@@ -124,7 +123,7 @@ export default {
           { required: true, message: '请选择性别', trigger: 'blur' }
         ],
         birthday: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { required: true, message: '请选择日期', trigger: 'change' }
         ]
       }
     }
@@ -143,10 +142,11 @@ export default {
       }
       form = validateExcel(form)
       this.ruleForm.name = form.name
-      this.ruleForm.gender = form.name
-      this.ruleForm.phone = form.birthday
-      this.ruleForm.insName = form.insName
       this.ruleForm.gender = form.gender
+      this.ruleForm.phone = form.phone
+      this.ruleForm.insName = form.insName
+      console.log('form.birthday', form.birthday)
+      this.ruleForm.birthday = form.birthday
     },
     beforeUploadExcel(file) {
       const isLt1M = file.size / 1024 / 1024 < 1
