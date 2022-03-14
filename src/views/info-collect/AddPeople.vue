@@ -142,7 +142,11 @@ export default {
         insName: results[0].机构名
       }
       form = validateExcel(form)
-      this.ruleForm = form
+      this.ruleForm.name = form.name
+      this.ruleForm.gender = form.name
+      this.ruleForm.phone = form.birthday
+      this.ruleForm.insName = form.insName
+      this.ruleForm.gender = form.gender
     },
     beforeUploadExcel(file) {
       const isLt1M = file.size / 1024 / 1024 < 1
