@@ -63,3 +63,10 @@ export function feePage(params) {
     params
   })
 }
+export function exportMem(params) {
+  return request({
+    url: '/member/export',
+    method: 'post',
+    data: params
+  })
+}

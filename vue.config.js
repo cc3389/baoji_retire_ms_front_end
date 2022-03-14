@@ -31,14 +31,14 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
   // 跨域代理
-  //   proxy: {
-  //     '/': {
-  //       // 请求的实际地址
-  //       target: 'http://192.168.10.158:8080',
-  //       secure: false,
-  //       changeOrigin: true
-  //     }
-  //   },
+    proxy: {
+      '/': {
+        // 请求的实际地址
+        target: 'http://192.168.10.158:8080',
+        secure: false,
+        changeOrigin: true
+      }
+    },
     port: port,
     open: true,
     overlay: {

@@ -8,19 +8,19 @@
           <el-form-item label="姓名">
             <el-input v-model="requestParam.name" placeholder="姓名" />
           </el-form-item>
-<!--          <el-form-item label="生日">-->
-<!--            <el-col>-->
-<!--              <el-form-item prop="birth">-->
-<!--                <el-date-picker v-model="requestParam.birth" type="date" placeholder="选择生日" style="width: 100%" />-->
-<!--              </el-form-item>-->
-<!--            </el-col>-->
-<!--          </el-form-item>-->
-<!--          <el-form-item label="性别" prop="gender">-->
-<!--            <el-radio-group v-model="requestParam.gender">-->
-<!--              <el-radio label="男" />-->
-<!--              <el-radio label="女" />-->
-<!--            </el-radio-group>-->
-<!--          </el-form-item>-->
+          <!--          <el-form-item label="生日">-->
+          <!--            <el-col>-->
+          <!--              <el-form-item prop="birth">-->
+          <!--                <el-date-picker v-model="requestParam.birth" type="date" placeholder="选择生日" style="width: 100%" />-->
+          <!--              </el-form-item>-->
+          <!--            </el-col>-->
+          <!--          </el-form-item>-->
+          <!--          <el-form-item label="性别" prop="gender">-->
+          <!--            <el-radio-group v-model="requestParam.gender">-->
+          <!--              <el-radio label="男" />-->
+          <!--              <el-radio label="女" />-->
+          <!--            </el-radio-group>-->
+          <!--          </el-form-item>-->
           <el-form-item>
             <el-button type="primary" @click="handleFilterSumit">过滤器</el-button>
             <el-button @click="resetFilter('filter')">重置</el-button>
@@ -52,6 +52,7 @@
     <el-row v-loading="listLoading" type="flex" justify="center">
       <el-col :span="18">
         <el-table
+          ref="tableData"
           :data="tableData"
           style="width: 100%"
           :default-sort="{prop: 'peoId', order: 'ascending'}"
@@ -59,7 +60,7 @@
         >
           <el-table-column type="selection" align="center" />
           <el-table-column
-            prop="id"
+            prop="peoId"
             label="id"
             widith="150"
           />
@@ -249,7 +250,7 @@
 import { validatePhone } from '@/utils/validate'
 import { editMember } from '@/api/file'
 import { Message } from 'element-ui'
-import { queryMember, queryMemberDetail } from '@/api/member'
+import { exportMem, queryMember, queryMemberDetail } from '@/api/member'
 import { elDateToFormat, formatToElDate } from '@/utils/date'
 import { transSuggestion } from '@/api/trans'
 import { transOut } from '@/api/member'
@@ -337,26 +338,37 @@ export default {
   },
   methods: {
     handleSelectionChange(val) {
+      console.log('selection change', val)
       this.multipleSelection = val
     },
     handleDownload() {
       if (this.multipleSelection.length) {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['id', '姓名', '生日', '性别']
-          const filterVal = ['id', 'name', 'birthday', 'gender']
-          const list = this.multipleSelection
-          const data = this.formatJson(filterVal, list)
-          console.log('准备导出')
-          console.log(data)
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: this.filename
+          const tHeader = ['姓名', '生日', '性别', '手机号', '机构名称', '健康状况']
+          const filterVal = ['name', 'birth', 'gender', 'phone', 'insName', 'isDeath']
+          const originalList = this.multipleSelection
+          var list = []
+          for (const i in originalList) {
+            list.push(originalList[i].peoId)
+          }
+          var exportData = null
+          const requestParam = { list }
+          new Promise(resolve => {
+            exportMem(requestParam).then(response => {
+              if (response.code === 200) {
+                exportData = response.data.list
+                const data = this.formatJson(filterVal, exportData)
+                excel.export_json_to_excel({
+                  header: tHeader,
+                  data,
+                  filename: this.filename
+                })
+              }
+            })
           })
-          console.log('导出成功')
-          this.$refs.multipleTable.clearSelection()
           this.downloadLoading = false
+          this.$refs.tableData.clearSelection()
         })
       } else {
         this.$message({
