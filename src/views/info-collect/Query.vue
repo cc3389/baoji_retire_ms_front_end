@@ -153,11 +153,11 @@
               年龄
             </template>
             {{ detailData.age }}
-          </el-descriptions-item>
-          <template slot="extra">
-            <el-button type="primary" size="small">导出</el-button>
-          </template>
-          <el-descriptions-item>
+<!--          </el-descriptions-item>-->
+<!--          <template slot="extra">-->
+<!--            <el-button type="primary" size="small">导出</el-button>-->
+<!--          </template>-->
+<!--          <el-descriptions-item>-->
             <template slot="label">
               <i class="el-icon-office-building" />
               是否死亡
