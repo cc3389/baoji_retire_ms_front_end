@@ -19,3 +19,9 @@ export function visitAdd(params) {
     data: params
   })
 }
+export function visitChart() {
+  return request({
+    url: '/visit/chart',
+    method: 'get'
+  })
+}

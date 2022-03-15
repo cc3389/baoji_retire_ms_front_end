@@ -41,6 +41,11 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
+  // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
+]
+
+export const asyncRoutes = [
   {
     path: '/',
     component: Layout,
@@ -49,14 +54,31 @@ export const constantRoutes = [
       path: 'dashboard',
       name: '仪表盘',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '仪表盘', icon: 'dashboard', roles: ['low', 'mid', 'high'] }
+      meta: { title: '仪表盘', icon: 'dashboard', roles: ['low'] }
     }]
   },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-export const asyncRoutes = [
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: '仪表盘',
+      component: () => import('@/views/dashboard/index2'),
+      meta: { title: '仪表盘', icon: 'dashboard', roles: ['mid'] }
+    }]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: '仪表盘',
+      component: () => import('@/views/dashboard/index3'),
+      meta: { title: '仪表盘', icon: 'dashboard', roles: ['high'] }
+    }]
+  },
   // 信息采集模块
   {
     path: '/info-collect',
@@ -186,6 +208,28 @@ export const asyncRoutes = [
         name: 'manage',
         component: () => import('@/views/retire-manage/Manage'),
         meta: { title: '管理退管', icon: '社区管理', roles: 'mid' }
+      }
+    ]
+  },
+  // 账号管理
+  {
+    path: '/account-manage',
+    component: Layout,
+    meta: {
+      roles: ['mid', 'low', 'high'],
+      title: '账号管理',
+      icon: '离退休_fill'
+    },
+    children: [
+      {
+        path: 'account',
+        name: 'account-manage',
+        component: () => import('@/views/account-manage/account'),
+        meta: {
+          roles: ['mid', 'low', 'high'],
+          title: '账号管理',
+          icon: '离退休_fill'
+        }
       }
     ]
   },

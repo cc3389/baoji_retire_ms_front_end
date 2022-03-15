@@ -77,5 +77,30 @@ export default {
         ]
       }
     }
+  },
+  'get|/visit/chart': option => {
+    return {
+      code: 200,
+      mag: 'ok',
+      data: {
+        list: [
+          { comName: '1区',
+            total: 1
+          },
+          { comName: '5区',
+            total: 32
+          },
+          { comName: '2区',
+            total: 4
+          },
+          { comName: '3区',
+            total: 5
+          },
+          { comName: '4区',
+            total: 2
+          }
+        ]
+      }
+    }
   }
 }

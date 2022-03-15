@@ -54,3 +54,10 @@ export function adminSuggestion() {
     method: 'get'
   })
 }
+export function resetPass(params) {
+  return request({
+    url: '/admin/changePwd',
+    method: 'post',
+    data: params
+  })
+}

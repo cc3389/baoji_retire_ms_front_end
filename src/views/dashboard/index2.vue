@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Chart from '@/components/Charts/Keyboard'
+import Chart from '@/components/Charts/LineMarker'
 
 export default {
-  name: 'Index',
+  name: 'Index2',
   components: { Chart }
 }
 </script>

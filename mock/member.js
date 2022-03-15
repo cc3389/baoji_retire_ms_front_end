@@ -162,5 +162,15 @@ export default {
         }]
       }
     }
+  },
+  'get|/member/chart': option => {
+    return {
+      code: 200,
+      mag: 'ok',
+      data: {
+        in: [12, 1, 43, 4, 3, 0, 2, 6, 4, 6, 3, 6],
+        out: [12, 1, 43, 4, 3, 45, 2, 6, 4, 6, 3, 6]
+      }
+    }
   }
 }
