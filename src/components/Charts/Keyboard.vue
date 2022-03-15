@@ -73,77 +73,43 @@ export default {
     setOptions({ data, data2 } = {}) {
       console.log('data:', data)
       console.log('data2:', data2)
+      const xAxisData = [
+        '1月',
+        '2月',
+        '3月',
+        '4月',
+        '5月',
+        '6月',
+        '7月',
+        '8月',
+        '9月',
+        '10月',
+        '11月',
+        '12月'
+      ]
       this.chart.setOption({
         title: {
-          text: '社区人员转入转出情况'
+          top: 20,
+          text: '转入转出人数统计',
+          textStyle: {
+            fontWeight: 'normal',
+            fontSize: 16,
+            color: '#F1F1F3'
+          },
+          left: '1%'
         },
         backgroundColor: '#08263a',
         grid: {
           left: '5%',
           right: '5%'
         },
-        xAxis: [
-          //   {
-          //   axisTick: {
-          //     alignWithLabel: true
-          //   },
-          //   type: 'category',
-          //   name: '时间',
-          //   show: true, // 参照放下面
-          //   data: xAxisData
-          // }
-          {
-            axisTick: {
-              alignWithLabel: true
-            },
-            type: 'category',
-            axisLine: {
-              lineStyle: {
-                color: '#57617B'
-              }
-            },
-            name: '转入人数',
-            data: [
-              '1月',
-              '2月',
-              '3月',
-              '4月',
-              '5月',
-              '6月',
-              '7月',
-              '8月',
-              '9月',
-              '10月',
-              '11月',
-              '12月'
-            ]
-          },
-          {
-            axisTick: {
-              alignWithLabel: true
-            },
-            name: '转出人数',
-            type: 'category',
-            axisLine: {
-              lineStyle: {
-                color: '#57617B'
-              }
-            },
-            data: [
-              '1月',
-              '2月',
-              '3月',
-              '4月',
-              '5月',
-              '6月',
-              '7月',
-              '8月',
-              '9月',
-              '10月',
-              '11月',
-              '12月'
-            ]
-          }],
+        xAxis: [{
+          show: false,
+          data: xAxisData
+        }, {
+          show: false,
+          data: xAxisData
+        }],
         visualMap: {
           show: false,
           min: 0,
@@ -155,7 +121,7 @@ export default {
         },
         yAxis: {
           axisLine: {
-            show: false // y轴坐标引导线
+            show: false
           },
           axisLabel: {
             textStyle: {
