@@ -9,11 +9,11 @@ import { visitChart } from '@/api/visit'
 
 export default {
   watch: {
-    options: {
-      handler(options) {
-        this.chart.setOption(this.options)
-      },
-      deep: true
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.setOptions(val)
+      }
     }
   },
   mixins: [resize],
@@ -38,11 +38,16 @@ export default {
   data() {
     return {
       chart: null,
-      visitCountArray: [],
-      communityArray: []
+      chartData: {
+        communityArray: [],
+        visitCountArray: []
+      }
     }
   },
   mounted() {
+    this.getData()
+    console.log('visitArray', this.chartData.visitCountArray)
+    console.log('communityArray', this.chartData.communityArray)
     this.initChart()
   },
   beforeDestroy() {
@@ -53,19 +58,20 @@ export default {
     this.chart = null
   },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id))
+    getData() {
       new Promise(resolve => {
         visitChart().then(response => {
           if (response.code === 200) {
             const visitList = response.data.list
             for (const i in visitList) {
-              this.communityArray.push(visitList[i].comName)
-              this.visitCountArray.push(visitList[i].total)
+              this.chartData.communityArray.push(visitList[i].comName)
+              this.chartData.visitCountArray.push(visitList[i].total)
             }
           }
         })
       })
+    },
+    setOptions({ communityArray, visitCountArray } = {}) {
       this.chart.setOption({
         backgroundColor: '#394056',
         title: {
@@ -114,7 +120,7 @@ export default {
               color: '#57617B'
             }
           },
-          data: this.communityArray
+          data: communityArray
         }],
         yAxis: [{
           type: 'value',
@@ -169,12 +175,15 @@ export default {
               color: 'rgb(137,189,27)',
               borderColor: 'rgba(137,189,2,0.27)',
               borderWidth: 12
-
             }
           },
-          data: this.visitCountArray
+          data: visitCountArray
         }]
       })
+    },
+    initChart() {
+      this.chart = echarts.init(document.getElementById(this.id))
+      this.setOptions(this.chartData)
     }
   }
 }

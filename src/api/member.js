@@ -72,7 +72,7 @@ export function exportMem(params) {
 }
 export function memberChart() {
   return request({
-    url: '/member/chart',
+    url: '/trans/groupByDate',
     method: 'get'
   })
 }
