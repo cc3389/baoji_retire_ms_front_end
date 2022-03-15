@@ -37,7 +37,7 @@ export default {
     }
   },
   watch: {
-    chartData: {
+    tableData: {
       deep: true,
       handler(val) {
         this.setOptions(val)
@@ -175,7 +175,7 @@ export default {
         series: [{
           name: 'back',
           type: 'bar',
-          data: this.tableData.data2,
+          data: data2,
           z: 1,
           itemStyle: {
             normal: {
@@ -185,10 +185,11 @@ export default {
               shadowColor: '#111'
             }
           }
-        }, {
+        },
+        {
           name: 'Simulate Shadow',
           type: 'line',
-          data: this.tableData.data2,
+          data,
           z: 2,
           showSymbol: false,
           animationDelay: 0,
@@ -206,10 +207,11 @@ export default {
               shadowColor: '#000'
             }
           }
-        }, {
+        },
+        {
           name: 'front',
           type: 'bar',
-          data: this.tableData.data,
+          data,
           xAxisIndex: 1,
           z: 3,
           itemStyle: {
