@@ -5,17 +5,9 @@
 <script>
 import echarts from 'echarts'
 import resize from './mixins/resize'
-import {memberChart} from "@/api/member";
+import { memberChart } from '@/api/member'
 
 export default {
-  watch: {
-    options: {
-      handler(options) {
-        this.chart.setOption(this.options)
-      },
-      deep: true
-    }
-  },
   mixins: [resize],
   props: {
     className: {
@@ -37,12 +29,23 @@ export default {
   },
   data() {
     return {
-      chart: null,
-      data: '',
-      data2: ''
+      tableData: {
+        data: '',
+        data2: ''
+      },
+      chart: null
+    }
+  },
+  watch: {
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.setOptions(val)
+      }
     }
   },
   mounted() {
+    this.getData()
     this.initChart()
   },
   beforeDestroy() {
@@ -53,39 +56,21 @@ export default {
     this.chart = null
   },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id))
+    getData() {
       new Promise(resolve => {
         memberChart().then(response => {
           if (response.code === 200) {
-            this.data = response.data.in
-            this.data2 = response.data.out
+            this.tableData.data = response.data.in
+            this.tableData.data2 = response.data.out
           }
         })
       })
-      const xAxisData = [
-        '1月',
-        '2月',
-        '3月',
-        '4月',
-        '5月',
-        '6月',
-        '7月',
-        '8月',
-        '9月',
-        '10月',
-        '11月',
-        '12月'
-      ]// x轴底部参照
-      // const data = [] // 正数据
-      // const data2 = []// 负数据
-      // for (let i = 1; i <= 12; i++) {
-      //   xAxisData.push(i)
-      //   // data.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5)
-      //   data.push(i)
-      //   // data2.push((Math.sin(i / 5) * (i / 5 + 10) + i / 6) * 3)
-      //   data2.push(-i)
-      // }
+    },
+    initChart() {
+      this.chart = echarts.init(document.getElementById(this.id))
+      this.setOptions(this.tableData)
+    },
+    setOptions({ data, data2 } = {}) {
       this.chart.setOption({
         title: {
           text: '社区人员转入转出情况'
@@ -96,15 +81,15 @@ export default {
           right: '5%'
         },
         xAxis: [
-        //   {
-        //   axisTick: {
-        //     alignWithLabel: true
-        //   },
-        //   type: 'category',
-        //   name: '时间',
-        //   show: true, // 参照放下面
-        //   data: xAxisData
-        // }
+          //   {
+          //   axisTick: {
+          //     alignWithLabel: true
+          //   },
+          //   type: 'category',
+          //   name: '时间',
+          //   show: true, // 参照放下面
+          //   data: xAxisData
+          // }
           {
             axisTick: {
               alignWithLabel: true
@@ -188,7 +173,7 @@ export default {
         series: [{
           name: 'back',
           type: 'bar',
-          data: this.data2,
+          data: this.tableData.data2,
           z: 1,
           itemStyle: {
             normal: {
@@ -201,7 +186,7 @@ export default {
         }, {
           name: 'Simulate Shadow',
           type: 'line',
-          data: this.data2,
+          data: this.tableData.data2,
           z: 2,
           showSymbol: false,
           animationDelay: 0,
@@ -222,7 +207,7 @@ export default {
         }, {
           name: 'front',
           type: 'bar',
-          data: this.data,
+          data: this.tableData.data,
           xAxisIndex: 1,
           z: 3,
           itemStyle: {
