@@ -71,6 +71,8 @@ export default {
       this.setOptions(this.tableData)
     },
     setOptions({ data, data2 } = {}) {
+      console.log('data:', data)
+      console.log('data2:', data2)
       this.chart.setOption({
         title: {
           text: '社区人员转入转出情况'
