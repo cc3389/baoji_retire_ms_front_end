@@ -62,6 +62,9 @@ export default {
           if (response.code === 200) {
             this.tableData.data = response.data.in
             this.tableData.data2 = response.data.out
+            for (const i in this.tableData.data2) {
+              this.tableData.data2[i] = -this.tableData.data2[i]
+            }
           }
         })
       })
