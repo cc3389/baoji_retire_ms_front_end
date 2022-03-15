@@ -13,4 +13,9 @@ export function transSuggestion() {
     method: 'get'
   })
 }
-
+export function memberChart() {
+  return request({
+    url: '/trans/groupByDate',
+    method: 'get'
+  })
+}

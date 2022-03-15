@@ -5,7 +5,7 @@
 <script>
 import echarts from 'echarts'
 import resize from './mixins/resize'
-import { memberChart } from '@/api/member'
+import { memberChart } from '@/api/trans'
 
 export default {
   mixins: [resize],

@@ -21,7 +21,7 @@ export function visitAdd(params) {
 }
 export function visitChart() {
   return request({
-    url: '/visit/chart',
+    url: '/visit/groupByCom',
     method: 'get'
   })
 }

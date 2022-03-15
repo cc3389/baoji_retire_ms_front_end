@@ -70,9 +70,4 @@ export function exportMem(params) {
     data: params
   })
 }
-export function memberChart() {
-  return request({
-    url: '/trans/groupByDate',
-    method: 'get'
-  })
-}
+
